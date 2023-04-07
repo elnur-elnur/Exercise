@@ -1,28 +1,33 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container my-5">
+    <h1 class="mb-3">Exercises Panel</h1>
+    <div class="row">
+      <div class="col-md-12">
+        <h3>New Exercise</h3>
+        <NewExercise />
+      </div>
+      <div class="col-md-12 mt-5">
+        <h3>Exercise Table</h3>
+        <ExerciseTable />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import NewExercise from "./components/NewExercise.vue";
+import ExerciseTable from "./components/ExerciseTable.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  components: {
+    NewExercise,
+    ExerciseTable,
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
