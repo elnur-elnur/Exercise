@@ -70,10 +70,7 @@ export default {
       this.$store.commit("setExercises", exercises);
     },
     editExercise(exercise) {
-      // Clone the exercise object to avoid modifying the original object
       const editedExercise = { ...exercise };
-
-      // Prompt the user to edit the subject and tags fields
       const subject = prompt("Enter new subject", editedExercise.subject);
       const tags = prompt(
         "Enter new tags (separated by semicolons)",
