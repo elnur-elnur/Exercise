@@ -12,9 +12,23 @@
         {{ row.value.join(", ") }}
       </template>
       <template #cell(actions)="row">
-        <b-button size="sm" variant="danger" @click="deleteExercise(row.item)"
-          >Delete</b-button
-        >
+        <div>
+          <b-button
+            size="sm"
+            variant="primary"
+            class="mr-2"
+            @click="editExercise(row.item)"
+          >
+            <b-icon icon="pencil"></b-icon>
+          </b-button>
+          <b-button
+            size="sm"
+            variant="danger"
+            @click="deleteExercise(row.item)"
+          >
+            <b-icon icon="trash"></b-icon>
+          </b-button>
+        </div>
       </template>
     </b-table>
   </div>
@@ -52,9 +66,32 @@ export default {
       exercises = exercises.filter((e) => e.id !== exercise.id);
       localStorage.setItem("exercises", JSON.stringify(exercises));
 
-      console.log("exercise", exercise);
-
       // Update table
+      this.$store.commit("setExercises", exercises);
+    },
+    editExercise(exercise) {
+      // Clone the exercise object to avoid modifying the original object
+      const editedExercise = { ...exercise };
+
+      // Prompt the user to edit the subject and tags fields
+      const subject = prompt("Enter new subject", editedExercise.subject);
+      const tags = prompt(
+        "Enter new tags (separated by semicolons)",
+        editedExercise.tags.join(";")
+      );
+
+      // Update the subject and tags fields of the edited exercise
+      editedExercise.subject = subject;
+      editedExercise.tags = tags.split(";").map((tag) => tag.trim());
+
+      // Update the exercise in local storage
+      let exercises = JSON.parse(localStorage.getItem("exercises") || "[]");
+      exercises = exercises.map((e) =>
+        e.id === editedExercise.id ? editedExercise : e
+      );
+      localStorage.setItem("exercises", JSON.stringify(exercises));
+
+      // Update the table
       this.$store.commit("setExercises", exercises);
     },
   },
